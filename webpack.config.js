@@ -1,10 +1,11 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-      popup: './src/popup.jsx'
+      popup: './src/popup-page/popup.tsx'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -12,24 +13,26 @@ module.exports = {
   },
   module: {
     rules: [{ 
-        test: /\.(js|jsx)$/, 
+        test: /\.(js|jsx|ts(x?))$/, 
         exclude: /node_modules/,
         use: {
-            loader: 'babel-loader',
+            loader: 'ts-loader',
             options: {
-                presets : ['@babel/preset-env', '@babel/preset-react']
+                // presets : ['@babel/preset-env', '@babel/preset-react']
             }
         }
     }],
   },
   plugins: [new HtmlWebpackPlugin({
-      template: './src/popup.html',
+      template: './src/popup-page/popup.html',
       filename: 'popup.html',
+      chunks: ['popup']
   }),
   new CopyPlugin({
     patterns: [
-      { from: "public"},
+      { from: "public", to: "."},
     ],
   }),
+  new CleanWebpackPlugin()
 ],
 };
