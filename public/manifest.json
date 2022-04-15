@@ -1,6 +1,6 @@
 {
-  "name": "Getting Started Example",
-  "description": "Build an Extension!",
+  "name": "Auto fill",
+  "description": "auto fill input",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
