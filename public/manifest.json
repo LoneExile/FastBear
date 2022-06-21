@@ -1,6 +1,6 @@
 {
-  "name": "Auto fill",
-  "description": "auto fill input",
+  "name": "ICEBEAR Tester",
+  "description": "For Faster Test by ICEBEAR",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
@@ -11,5 +11,14 @@
       "matches": ["<all_urls>"],
       "js": ["contentscript.js"]
     }
-  ]
+  ],
+  "icons": {
+    "16": "./images/icebear1.png",
+    "48": "./images/icebear1.png",
+    "128": "./images/icebear1.png"
+  },
+  "permissions": ["tabs", "scripting", "storage"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
 }
