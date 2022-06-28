@@ -28,6 +28,6 @@ only work with my company email login to that browser
 -   node 16+
 
 ```bash
-npm i
-npm run dev
+pnpm i
+pnpm run dev
 ```
