@@ -1,7 +1,9 @@
 # Auto fill extension
 
 Chrome base browser extension.
+
 Using stack React, TypeScript, Tailwind, Webpack and Google API.
+
 I just don't like to do the same thing repeatedly So I make this tool.
 
 ## Features
