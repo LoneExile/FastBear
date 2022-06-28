@@ -1,6 +1,6 @@
 {
-  "name": "ICEBEAR Tester",
-  "description": "For Faster Test by ICEBEAR",
+  "name": "FastBear",
+  "description": "for more productive test",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
@@ -14,16 +14,10 @@
     }
   ],
   "icons": {
-    "16": "./images/icebear1.png",
-    "48": "./images/icebear1.png",
-    "128": "./images/icebear1.png"
+    "16": "./images/polar-bear-128.png",
+    "48": "./images/polar-bear-128.png",
+    "128": "./images/polar-bear-128.png"
   },
   "offline_enabled": true,
-  "permissions": ["tabs", "scripting", "storage", "activeTab"],
-  "optional_permissions": [
-  ],
-  "host_permissions": ["<all_urls>", "*://*/*", "https://*/*"],
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
-  }
+  "permissions": ["storage"]
 }
