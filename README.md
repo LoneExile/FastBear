@@ -10,6 +10,9 @@ I just don't like to do the same thing repeatedly So I make this tool.
 
 -   fast login using data from google sheet easy to edit when user/pass change
 
+## Download
+[Chrome Web Store](https://chrome.google.com/webstore/detail/fastbear/lmacicjlhgbjnlombdiinpeabajfmdmg)
+
 ## Notice
 
 only work with my company email login to that browser
