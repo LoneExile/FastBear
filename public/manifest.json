@@ -1,7 +1,7 @@
 {
   "name": "FastBear",
   "description": "for more productive test",
-  "version": "0.1.1",
+  "version": "1.0.1",
   "manifest_version": 3,
   "action": {
     "default_popup": "popup.html"
