@@ -6,7 +6,7 @@ const createFile = async (url: string): Promise<File> => {
   }
   return new File([data], 'temp.jpg', metadata)
 }
-const fillData = async (imgLink : string) => {
+const fillData = async (imgLink: string) => {
   const designFile = await createFile(imgLink)
   const element: any = document.querySelectorAll('input.none-input-file')
   const dt = new DataTransfer()
@@ -28,20 +28,21 @@ const clearLocal = (msg: any) => {
     archive[keys[i]] = localStorage.getItem(keys[i])
   }
   localStorage.clear()
-  if(msg['open']){
+  if (msg['open']) {
     window.open(msg['link'], '_self')?.focus
   }
 }
 
 chrome.runtime.onMessage.addListener((msg, sender, callback) => {
   if (msg['action'] === 'login') {
+    clearLocal(msg)
     callback(msg['open'])
   } else if (msg['action'] === 'fillKeyFull') {
     fillData(msg['link'])
     // getText()
-  } else if(msg === 'checkElement') {
+  } else if (msg === 'checkElement') {
     const element = document.querySelectorAll('input.none-input-file')
-    callback(element.length > 0? true : false)
+    callback(element.length > 0 ? true : false)
   } else {
     callback('good')
   }
