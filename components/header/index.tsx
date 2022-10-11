@@ -1,15 +1,26 @@
 import create from 'zustand'
 
-// TODO: find this set type
-const tabStore = (set: any) => ({
-  tab: 1,
-  setTab: (tab: number) => set(() => ({tab: tab}))
-})
+interface TabProps {
+  tab: number
+  setTab: (num: number) => void
+}
 
-const useTabStore = create(tabStore)
+const useTabStore = create<TabProps>((set) => ({
+  tab: 1,
+  setTab: (tab) => set(() => ({tab: tab}))
+}))
+
+// // NOTE: this type with set state looks too complicated
+// const tabStore = (set : (partial: TabProps | Partial<TabProps> | ((state: TabProps) => TabProps | Partial<TabProps>),
+// replace?: boolean) => void) => ({
+//   tab: 1,
+//   setTab: (tab: number) => set(() => ({tab: tab}))
+// })
+// const useTabStore = create<TabProps>(tabStore)
 
 const setTabEnv = (num: number) => {
   useTabStore.getState().setTab(num)
+  // TODO: use old state when press again (use chrome api)
 }
 
 function classTab(num: number) {
