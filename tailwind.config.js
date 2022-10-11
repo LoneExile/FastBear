@@ -14,5 +14,8 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
     require('daisyui')
-  ]
+  ],
+  daisyui: {
+    themes: ['luxury', 'dracula', 'winter']
+  }
 }
