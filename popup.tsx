@@ -1,10 +1,8 @@
-import {useState} from 'react'
-
 import Main from './components/main'
 
-function IndexPopup() {
-  const [data, setData] = useState('')
+import './style.css'
 
+function IndexPopup() {
   return (
     <div
       style={{
@@ -13,17 +11,7 @@ function IndexPopup() {
         padding: 16
       }}>
       <Main />
-      <h2>
-        Welcome to your{' '}
-        <a href="https://www.plasmo.com" target="_blank">
-          Plasmo
-        </a>{' '}
-        Extension!
-      </h2>
-      <input onChange={(e) => setData(e.target.value)} value={data} />
-      <a href="https://docs.plasmo.com" target="_blank">
-        View Docs
-      </a>
+      <progress className="progress w-56"></progress>
     </div>
   )
 }
