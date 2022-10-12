@@ -1,3 +1,4 @@
+// import {useEffect} from 'react'
 import create from 'zustand'
 
 interface TabProps {
@@ -10,37 +11,35 @@ const useTabStore = create<TabProps>((set) => ({
   setTab: (tab) => set(() => ({tab: tab}))
 }))
 
-// // NOTE: this type with set state looks too complicated
-// const tabStore = (set : (partial: TabProps | Partial<TabProps> | ((state: TabProps) => TabProps | Partial<TabProps>),
-// replace?: boolean) => void) => ({
-//   tab: 1,
-//   setTab: (tab: number) => set(() => ({tab: tab}))
-// })
-// const useTabStore = create<TabProps>(tabStore)
-
+// TODO: use old state when press again (use chrome api)
 const setTabEnv = (num: number) => {
   useTabStore.getState().setTab(num)
-  // TODO: use old state when press again (use chrome api)
+  // chrome.storage.sync.set({storageTab: num})
 }
 
 function classTab(num: number) {
   const tab = useTabStore((state) => state.tab)
   if (tab === num) {
-    return 'tab tab-active tab-lifted'
+    return 'tab tab-active tab-lifted flex-1'
   } else {
-    return 'tab tab-lifted'
+    return 'tab tab-lifted flex-1'
   }
 }
 
 function TabElement() {
   return (
     <>
-      <a className={classTab(1)} onClick={() => setTabEnv(1)}>
-        ⚡
-      </a>
-      <a className={classTab(2)} onClick={() => setTabEnv(2)}>
-        🪄
-      </a>
+      <div className="flex w-full grid-flow-row grid-cols-12 items-center gap-0 overflow-y-hidden overflow-x-hidden px-[4px]">
+        <a className={classTab(1)} onClick={() => setTabEnv(1)}>
+          ⚡
+        </a>
+        <a className={classTab(2)} onClick={() => setTabEnv(2)}>
+          🪄
+        </a>
+        <a className={classTab(0)} onClick={() => setTabEnv(0)}>
+          🚀
+        </a>
+      </div>
     </>
   )
 }
