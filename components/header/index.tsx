@@ -26,6 +26,7 @@ function TabElement() {
   function classTab(num: number) {
     const tab = typeof tabNumber !== 'undefined' ? tabNumber : 1
     // const tab = useTabStore((state) => state.tab)
+
     if (tab === num) {
       return 'tab tab-active tab-lifted flex-1'
     } else {
