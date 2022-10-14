@@ -25,9 +25,11 @@ function IndexPopup() {
   }
 
   return (
-    <div data-theme={theme} className="w-[300px] h-[360px] p-[10px]">
+    <div
+      data-theme={theme}
+      className="w-[300px] h-[360px] p-[10px] overflow-y-hidden overflow-x-hidden">
       <TabElement />
-      <div className="p-2 border-double border-4 rounded-md border-slate-900 h-[285px]">
+      <div className="p-2 border-solid border-2 rounded-md border-slate-900 h-[285px]">
         <QueryClientProvider client={queryClient}>
           {renderTab()}
         </QueryClientProvider>

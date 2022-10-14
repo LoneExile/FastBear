@@ -9,15 +9,15 @@ function TabElement() {
     const tab = useTabStore((state) => state.tab)
 
     if (tab === num) {
-      return 'tab tab-active tab-lifted flex-1'
+      return 'tab tab-active'
     } else {
-      return 'tab tab-lifted flex-1'
+      return 'tab'
     }
   }
 
   return (
     <>
-      <div className="flex w-full grid-flow-row grid-cols-12 items-center gap-0 overflow-y-hidden overflow-x-hidden px-[4px]">
+      <div className="flex w-full grid-flow-row grid-cols-12 items-center gap-0 overflow-y-hidden overflow-x-hidden px-[4px] tabs tabs-boxed bg-opacity-100 mb-2">
         <a className={classTab(1)} onClick={() => setTabEnv(1)}>
           ⚡
         </a>
