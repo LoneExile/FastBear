@@ -1,31 +1,25 @@
 import create from 'zustand'
-
-import {useStorage} from '@plasmohq/storage/hook'
+import {persist} from 'zustand/middleware'
 
 interface TabProps {
   tab: number
   setTab: (num: number) => void
 }
 
-const useTabStore = create<TabProps>((set) => ({
-  tab: 1,
-  setTab: (tab) => set(() => ({tab: tab}))
-}))
+const useTabStore = create(
+  persist<TabProps>((set) => ({
+    tab: 1,
+    setTab: (tab) => set(() => ({tab: tab}))
+  }))
+)
 
 function TabElement() {
-  const [tabNumber, setTabNumber] = useStorage<number>(
-    'tab-number',
-    (storedTab) => (typeof storedTab === 'undefined' ? 1 : storedTab)
-  )
-
   const setTabEnv = (num: number) => {
-    setTabNumber(num)
     useTabStore.getState().setTab(num)
   }
 
   function classTab(num: number) {
-    const tab = typeof tabNumber !== 'undefined' ? tabNumber : 1
-    // const tab = useTabStore((state) => state.tab)
+    const tab = useTabStore((state) => state.tab)
 
     if (tab === num) {
       return 'tab tab-active tab-lifted flex-1'
