@@ -20,7 +20,18 @@ export default function FastLogin() {
   }, [])
 
   if (isLoading) {
-    return <progress className="progress w-96"></progress>
+    return (
+      <>
+        <figure>
+          <img
+            className="w-[200px] h-[200px] rounded-full m-auto"
+            src="https://media.tenor.com/dZ0ost9JVMsAAAAC/dance-party.gif"
+            alt="Shoes"
+          />
+        </figure>
+        <progress className="progress mx-auto mt-auto"></progress>
+      </>
+    )
   }
 
   return (
