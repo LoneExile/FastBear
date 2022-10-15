@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 
 import useLoginStore from '../../storage/loginData'
-import {fetchUrl} from '../../utils/fetcher'
+import {fetchLoginData, fetchLoginUrl} from '../../utils/fetcher'
 
 export default function FastLogin() {
   const [isLoading, setLoading] = useState(true)
@@ -10,7 +10,7 @@ export default function FastLogin() {
   useEffect(() => {
     setLoading(true)
     if (loginData && Object.keys(loginData).length === 0) {
-      fetchUrl().then((data) => {
+      fetchLoginUrl().then((data) => {
         useLoginStore.getState().setLoginData(data)
         setLoading(false)
       })

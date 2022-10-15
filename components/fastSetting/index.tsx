@@ -1,43 +1,16 @@
 import {useThemeStore} from '../../storage/theme'
+import {AllTheme} from '../../utils/enum'
 
-const allTheme = [
-  'light',
-  'dark',
-  'cupcake',
-  'bumblebee',
-  'emerald',
-  'corporate',
-  'synthwave',
-  'retro',
-  'cyberpunk',
-  'valentine',
-  'halloween',
-  'garden',
-  'forest',
-  'aqua',
-  'lofi',
-  'pastel',
-  'fantasy',
-  'wireframe',
-  'black',
-  'luxury',
-  'dracula',
-  'cmyk',
-  'autumn',
-  'business',
-  'acid',
-  'lemonade',
-  'night',
-  'coffee',
-  'winter'
-]
+let allTheme = Object.values(AllTheme).filter(
+  (item) => typeof item !== 'number'
+)
 
 export default function FastLogin() {
   const setTheme = (event: React.ChangeEvent<HTMLSelectElement>) => {
     useThemeStore.getState().setTab(event.target.value)
   }
 
-  function buildOptions() {
+  const buildOptions = () => {
     var arr = []
     for (let i = 0; i < allTheme.length; i++) {
       arr.push(
