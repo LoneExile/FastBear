@@ -24,18 +24,22 @@ function IndexPopup() {
     }
   }
 
-  return (
-    <div
-      data-theme={theme}
-      className="w-[300px] h-[360px] p-[10px] overflow-y-hidden overflow-x-hidden">
-      <TabElement />
-      <div className="p-2 border-solid border-2 rounded-md border-slate-900 h-[285px]">
-        <QueryClientProvider client={queryClient}>
-          {renderTab()}
-        </QueryClientProvider>
-      </div>
-    </div>
-  )
+  const renderContent = () => {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <div
+          data-theme={theme}
+          className="w-[300px] h-[360px] p-[10px] overflow-y-hidden overflow-x-hidden">
+          <TabElement />
+          <div className="p-2 border-solid border-2 rounded-md border-slate-900 h-[285px]">
+            {renderTab()}
+          </div>
+        </div>
+      </QueryClientProvider>
+    )
+  }
+
+  return renderContent()
 }
 
 export default IndexPopup

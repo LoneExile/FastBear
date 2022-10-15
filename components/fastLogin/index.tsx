@@ -1,29 +1,31 @@
-import {useQuery} from '@tanstack/react-query'
+import {useEffect, useState} from 'react'
 
-import useLoadingStore from '../../storage/loadStatus'
+import useLoginStore from '../../storage/loginData'
 import {fetchUrl} from '../../utils/fetcher'
 
 export default function FastLogin() {
-  const displayUrl = () => {
-    const {data, status} = useQuery(['url'], fetchUrl)
-    if (status === 'loading') {
-      useLoadingStore.getState().setLoadingStatus('loading')
-      return <div>Loading</div>
+  const [isLoading, setLoading] = useState(true)
+  const loginData = useLoginStore((state) => state.loginData)
+
+  useEffect(() => {
+    setLoading(true)
+    if (loginData && Object.keys(loginData).length === 0) {
+      fetchUrl().then((data) => {
+        useLoginStore.getState().setLoginData(data)
+        setLoading(false)
+      })
+    } else {
+      setLoading(false)
     }
-    if (status === 'error') {
-      useLoadingStore.getState().setLoadingStatus('error')
-      return <div>Error</div>
-    }
-    if (status === 'success') {
-      useLoadingStore.getState().setLoadingStatus('success')
-      return <div>{data[0].env}</div>
-    }
+  }, [])
+
+  if (isLoading) {
+    return <progress className="progress w-96"></progress>
   }
 
   return (
     <div>
       <h1 className="text-3xl font-bold">🧸FastLogin</h1>
-      {displayUrl()}
     </div>
   )
 }
