@@ -65,7 +65,7 @@ export default function FastLogin() {
 
   return (
     <div className="h-[300px]">
-      <h2 className="text-3xl font-bold underline">Setting!!</h2>
+      <h2 className="text-3xl font-bold underline">⚙Setting</h2>
       <div className="flex flex-wrap justify-between h-[230px] mt-2">
         {dropDownTheme()}
       </div>

@@ -1,5 +1,6 @@
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 
+import About from './components/about/index'
 import FastLogin from './components/fastLogin/index'
 import FastSetting from './components/fastSetting/index'
 import TabElement from './components/main/header'
@@ -20,7 +21,7 @@ function IndexPopup() {
     } else if (tab === 2) {
       return <FastSetting />
     } else if (tab === 3) {
-      return <FastSetting />
+      return <About />
     }
   }
 
