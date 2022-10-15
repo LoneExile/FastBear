@@ -9,9 +9,9 @@ function TabElement() {
     const tab = useTabStore((state) => state.tab)
 
     if (tab === num) {
-      return 'tab tab-active text-opacity-100 font-bold'
+      return 'tab tab-active text-opacity-100 font-bold m-auto w-[33%]'
     } else {
-      return 'tab text-opacity-100'
+      return 'tab text-opacity-100 m-auto w-[33%]'
     }
   }
 
