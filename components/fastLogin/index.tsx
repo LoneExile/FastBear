@@ -4,12 +4,12 @@ import useLoginStore from '../../storage/loginData'
 import {fetchLoginData, fetchLoginUrl} from '../../utils/fetcher'
 
 export default function FastLogin() {
-  const [isLoading, setLoading] = useState(true)
+  const [isLoading, setLoading] = useState(false)
   const loginData = useLoginStore((state) => state.loginData)
 
   useEffect(() => {
-    setLoading(true)
     if (loginData && Object.keys(loginData).length === 0) {
+      setLoading(true)
       fetchLoginUrl().then((data) => {
         useLoginStore.getState().setLoginData(data)
         setLoading(false)
@@ -22,6 +22,7 @@ export default function FastLogin() {
   if (isLoading) {
     return (
       <>
+        <h1 className="text-3xl font-bold">🧸FastLogin</h1>
         <figure>
           <img
             className="w-[200px] h-[200px] rounded-full m-auto"
