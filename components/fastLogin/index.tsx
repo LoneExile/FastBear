@@ -34,6 +34,7 @@ export default function FastLogin() {
   // TODO: change loadingState to trigger to re-load?
   if (isLoading) {
     return (
+      // TODO: make progress bar look better
       <>
         <Header />
         <figure>
@@ -112,6 +113,7 @@ export default function FastLogin() {
         )
       }
       return (
+        // TODO: fixed height position this border to max-height
         <>
           <div className="flex flex-wrap justify-between p-2 mb-2 mt-3 border-2 rounded-md border-slate-900">
             {arr}

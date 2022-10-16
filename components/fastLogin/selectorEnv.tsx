@@ -8,6 +8,7 @@ export default function SelectorEnv() {
     var arr = []
     for (let i = 0; i < Object.values(loginUrl).length; i++) {
       arr.push(
+        // TODO: limit characters to display
         <option key={i} value={loginUrl[i].env}>
           {loginUrl[i].env.toUpperCase()}
         </option>
@@ -21,6 +22,8 @@ export default function SelectorEnv() {
   }
 
   const dropDownEnv = () => {
+    // TODO: make selector box bigger, so can display more characters
+    // TODO: add fuction button Update to reload login data
     return (
       <div className="flex w-[100%] h-[20%] mt-[2%] item-center px-[2%]">
         <select
