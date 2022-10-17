@@ -1,4 +1,5 @@
 import {useEffect} from 'react'
+import shallow from 'zustand/shallow'
 
 import useLoadingStore from '../../storage/loadStatus'
 import useLoginStore from '../../storage/loginData'
@@ -6,10 +7,15 @@ import {fetchLoginData, fetchLoginUrl} from '../../utils/fetcher'
 import SelectorEnv from './selectorEnv'
 
 export default function FastLogin() {
-  // TODO: wrap this in zustand template
-  const loginData = useLoginStore((state) => state.loginData)
-  const loginUrl = useLoginStore((state) => state.loginUrl)
-  const currentEnv = useLoginStore((state) => state.currentEnv)
+  const {loginData, loginUrl, currentEnv} = useLoginStore(
+    (state) => ({
+      loginData: state.loginData,
+      loginUrl: state.loginUrl,
+      currentEnv: state.currentEnv
+    }),
+    shallow
+  )
+
   const loadingState = useLoadingStore((state) => state.loadingStatus)
   const checkLoginLS =
     (loginData || loginUrl) &&
