@@ -15,7 +15,6 @@ export default function FastLogin() {
     }),
     shallow
   )
-
   const loadingState = useLoadingStore((state) => state.loadingStatus)
   const checkLoginLS =
     (loginData || loginUrl) &&
