@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useEffect} from 'react'
 
 import useLoadingStore from '../../storage/loadStatus'
 import useLoginStore from '../../storage/loginData'
@@ -6,7 +6,6 @@ import {fetchLoginData, fetchLoginUrl} from '../../utils/fetcher'
 import SelectorEnv from './selectorEnv'
 
 export default function FastLogin() {
-  const [isLoading, setLoading] = useState(false)
   // TODO: wrap this in zustand template
   const loginData = useLoginStore((state) => state.loginData)
   const loginUrl = useLoginStore((state) => state.loginUrl)
@@ -30,9 +29,7 @@ export default function FastLogin() {
     )
   }
 
-  console.log(loadingState) // WARN:
-  // TODO: change loadingState to trigger to re-load?
-  if (isLoading) {
+  if (loadingState) {
     return (
       // TODO: make progress bar look better
       <>
@@ -51,19 +48,17 @@ export default function FastLogin() {
 
   const fetchLogin = () => {
     if (checkLoginLS) {
-      setLoading(true)
-      useLoadingStore.getState().setLoadingStatus(true) // WARN:
+      useLoadingStore.getState().setLoadingStatus(true)
       fetchLoginUrl().then((data) => {
         useLoginStore.getState().setLoginUrl(data)
         fetchLoginData().then((data) => {
-          useLoadingStore.getState().setLoadingStatus(false) // WARN: its work!! remove setState then
+          useLoadingStore.getState().setLoadingStatus(false)
           useLoginStore.getState().setLoginData(data)
           useLoginStore.getState().setCurrentEnv(Object.keys(data)[0])
-          setLoading(false)
         })
       })
     } else {
-      setLoading(false)
+      useLoadingStore.getState().setLoadingStatus(false)
     }
   }
 
