@@ -1,7 +1,7 @@
 import useLoginStore from '../../storage/loginData'
 import {SheetUrl as S} from '../../utils/enum'
 
-export default function SelectorEnv() {
+export default function SelectorEnv(props: {fetchLogin: () => void}) {
   const loginUrl = useLoginStore((state) => state.loginUrl)
 
   const buildOptions = () => {
@@ -23,7 +23,6 @@ export default function SelectorEnv() {
 
   const dropDownEnv = () => {
     // TODO: make selector box bigger, so can display more characters
-    // TODO: add fuction button Update to reload login data
     return (
       <div className="flex w-[100%] h-[20%] mt-[2%] item-center px-[2%]">
         <select
@@ -35,7 +34,8 @@ export default function SelectorEnv() {
         <div className="ml-auto w-[45%] my-auto">
           <button
             className="tooltip btn btn-outline border-2 btn-sm font-bold mr-[10%]"
-            data-tip="Update">
+            data-tip="Update"
+            onClick={() => props.fetchLogin()}>
             📥
           </button>
           <button

@@ -16,12 +16,16 @@ export default function FastLogin() {
     shallow
   )
   const loadingState = useLoadingStore((state) => state.loadingStatus)
-  const checkLoginLS =
+  const isLoginInLS =
     (loginData || loginUrl) &&
     (Object.keys(loginData).length === 0 || Object.keys(loginUrl).length === 0)
 
   useEffect(() => {
-    fetchLogin()
+    if (isLoginInLS) {
+      fetchLogin()
+    } else {
+      useLoadingStore.getState().setLoadingStatus(false)
+    }
   }, [])
 
   const Title = () => {
@@ -52,19 +56,15 @@ export default function FastLogin() {
   }
 
   const fetchLogin = () => {
-    if (checkLoginLS) {
-      useLoadingStore.getState().setLoadingStatus(true)
-      fetchLoginUrl().then((data) => {
-        useLoginStore.getState().setLoginUrl(data)
-        fetchLoginData().then((data) => {
-          useLoadingStore.getState().setLoadingStatus(false)
-          useLoginStore.getState().setLoginData(data)
-          useLoginStore.getState().setCurrentEnv(Object.keys(data)[0])
-        })
+    useLoadingStore.getState().setLoadingStatus(true)
+    fetchLoginUrl().then((data) => {
+      useLoginStore.getState().setLoginUrl(data)
+      fetchLoginData().then((data) => {
+        useLoadingStore.getState().setLoadingStatus(false)
+        useLoginStore.getState().setLoginData(data)
+        useLoginStore.getState().setCurrentEnv(Object.keys(data)[0])
       })
-    } else {
-      useLoadingStore.getState().setLoadingStatus(false)
-    }
+    })
   }
 
   function openLogin(user: string, setEnv: string) {
@@ -126,7 +126,11 @@ export default function FastLogin() {
   return (
     <>
       <Title />
-      <SelectorEnv />
+      <SelectorEnv
+        fetchLogin={() => {
+          fetchLogin()
+        }}
+      />
       <ListLogin />
     </>
   )
