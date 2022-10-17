@@ -20,7 +20,7 @@ export default function FastLogin() {
     fetchLogin()
   }, [])
 
-  const Header = () => {
+  const Title = () => {
     return (
       <>
         <h1 className="text-3xl font-bold border-2 rounded-md text-center bg-secondary border-transparent">
@@ -36,7 +36,7 @@ export default function FastLogin() {
     return (
       // TODO: make progress bar look better
       <>
-        <Header />
+        <Title />
         <figure>
           <img
             className="w-[200px] h-[200px] rounded-full m-auto"
@@ -125,7 +125,7 @@ export default function FastLogin() {
 
   return (
     <>
-      <Header />
+      <Title />
       <SelectorEnv />
       <ListLogin />
     </>
