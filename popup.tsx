@@ -30,9 +30,9 @@ function IndexPopup() {
       <QueryClientProvider client={queryClient}>
         <div
           data-theme={theme}
-          className="w-[300px] h-[360px] p-[10px] overflow-y-hidden overflow-x-hidden">
+          className="w-[300px] h-[399px] p-[10px] overflow-y-hidden overflow-x-hidden">
           <TabElement />
-          <div className="p-2 border-solid border-2 rounded-md border-slate-900 h-[285px]">
+          <div className="p-2 border-solid border-2 rounded-md border-slate-900 h-[330px]">
             {renderTab()}
           </div>
         </div>
