@@ -1,21 +1,16 @@
 import {useEffect} from 'react'
-import shallow from 'zustand/shallow'
 
 import useLoadingStore from '../../storage/loadStatus'
 import useLoginStore from '../../storage/loginData'
 import {fetchLoginData, fetchLoginUrl} from '../../utils/fetcher'
 import ListLogin from './listLogin'
+import Loading from './loading'
 import SelectorEnv from './selectorEnv'
 import Title from './title'
 
 export default function FastLogin() {
-  const {loginData, loginUrl} = useLoginStore(
-    (state) => ({
-      loginData: state.loginData,
-      loginUrl: state.loginUrl
-    }),
-    shallow
-  )
+  const loginData = useLoginStore((state) => state.loginData)
+  const loginUrl = useLoginStore((state) => state.loginUrl)
   const loadingState = useLoadingStore((state) => state.loadingStatus)
   const isLoginInLS =
     (loginData || loginUrl) &&
@@ -43,19 +38,7 @@ export default function FastLogin() {
   }, [])
 
   if (loadingState) {
-    return (
-      <>
-        <Title />
-        <figure>
-          <img
-            className="w-[200px] h-[200px] rounded-full m-auto mt-[2%]"
-            src="../../assets/dance-party.gif"
-            alt="Loading..."
-          />
-        </figure>
-        <progress className="progress mx-auto mt-auto"></progress>
-      </>
-    )
+    return <Loading Title={Title} />
   }
 
   const fetchLogin = () => {
