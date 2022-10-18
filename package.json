@@ -33,6 +33,11 @@
     "typescript": "4.8.4"
   },
   "manifest": {
+    "manifest": {
+      "permissions": [
+        "tabs"
+      ]
+    },
     "host_permissions": [
       "https://*/*"
     ],
