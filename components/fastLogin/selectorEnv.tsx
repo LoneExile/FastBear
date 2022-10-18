@@ -1,7 +1,7 @@
 import useLoginStore from '../../storage/loginData'
 import {SheetUrl as S} from '../../utils/enum'
 
-export default function SelectorEnv(props: {fetchLogin: () => void}) {
+export default function SelectorEnv({fetchLogin}) {
   const loginUrl = useLoginStore((state) => state.loginUrl)
 
   const buildOptions = () => {
@@ -35,7 +35,7 @@ export default function SelectorEnv(props: {fetchLogin: () => void}) {
           <button
             className="tooltip btn btn-outline border-2 btn-sm font-bold mr-[10%]"
             data-tip="Update"
-            onClick={() => props.fetchLogin()}>
+            onClick={() => fetchLogin()}>
             📥
           </button>
           <button
