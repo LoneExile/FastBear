@@ -19,7 +19,8 @@ const AutoFill = () => {
       const currentTabsID = tabs.length === 0 ? 0 : tabs[0].id!
       var fillMessage = {
         action: 'fillKeyFull',
-        link: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Ours_brun_parcanimalierpyrenees_1.jpg'
+        link: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Ours_brun_parcanimalierpyrenees_1.jpg',
+        tabId: currentTabsID
       }
       chrome.tabs.sendMessage(currentTabsID, fillMessage, (response) => {
         console.log('Response from content: ', response)
