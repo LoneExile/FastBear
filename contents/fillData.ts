@@ -2,16 +2,17 @@ const createFile = async (url: string): Promise<File> => {
   let response = await fetch(url)
   let data = await response.blob()
   let metadata = {
-    type: 'image/jpeg'
+    type: 'image/png'
   }
-  return new File([data], 'temp.jpg', metadata)
+  return new File([data], 'temp.png', metadata)
 }
 const fillData = async (imgLink: string) => {
-  const designFile = await createFile(imgLink)
+  // TODO: fix this type any
   const element: any = document.querySelectorAll('input.none-input-file')
-  const dt = new DataTransfer()
-  dt.items.add(designFile)
-  for (var i = 0; i < element.length; i++) {
+  for (let i = 0; i < element.length; i++) {
+    const designFile = await createFile(imgLink + `${i + 1}.png`)
+    const dt = new DataTransfer()
+    dt.items.add(designFile)
     element[i].files = dt.files
     const event = new Event('change', {
       bubbles: !0
