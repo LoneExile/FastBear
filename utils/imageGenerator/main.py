@@ -1,5 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 
+# pip install Pillow
+
 width = 512
 height = 512
 font = ImageFont.truetype(r"./JetBrainsMono-Regular.ttf", size=140)
