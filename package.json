@@ -1,8 +1,8 @@
 {
-  "name": "auto-fill-extension",
-  "displayName": "Auto fill extension",
-  "version": "0.0.0",
-  "description": "A basic Plasmo extension.",
+  "name": "FastBear",
+  "displayName": "FastBear",
+  "version": "2.0.0",
+  "description": "Gotta go fast 🚀",
   "author": "bunlaikun",
   "scripts": {
     "dev": "plasmo dev",
