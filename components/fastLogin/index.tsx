@@ -18,9 +18,11 @@ export default function FastLogin() {
     (Object.keys(loginData).length === 0 || Object.keys(loginUrl).length === 0)
 
   useEffect(() => {
-    if (isLoginInLS) {
-      fetchLogin()
-    } else {
+    try {
+      if (isLoginInLS) {
+        fetchLogin()
+      }
+    } catch (e) {
       useLoadingStore.getState().setLoadingStatus(false)
     }
   }, [])
