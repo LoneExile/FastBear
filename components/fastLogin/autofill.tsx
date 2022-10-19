@@ -2,8 +2,8 @@ import {useEffect} from 'react'
 
 const AutoFill = () => {
   useEffect(() => {
-    // TODO: check element before enable buttom autofill
-    // TODO: ping check is vpn enable
+    // TODO: check element/url before enable buttom autofill
+    // TODO: ping check is vpn enable (ping?)
     // TODO: check user E-mail before render
     chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
       const currentTabsID = tabs.length === 0 ? 0 : tabs[0].id!
