@@ -14,7 +14,7 @@
     "@tailwindcss/typography": "^0.5.7",
     "autoprefixer": "^10.4.12",
     "buffer": "^6.0.3",
-    "daisyui": "^2.31.0",
+    "daisyui": "^2.33.0",
     "plasmo": "0.56.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
