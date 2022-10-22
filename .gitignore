@@ -42,5 +42,6 @@ keys.json
 .tsbuildinfo
 
 note.md
+test.*
 
 assets/numberPic/*
