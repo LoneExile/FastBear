@@ -14,9 +14,11 @@ export default function About() {
   const loadingState = useLoadingStore((state) => state.loadingStatus)
 
   const isHaveFillData = Object.keys(fillData).length === 0
-  var fillDataFilter = {...fillData}
-  delete fillDataFilter['devList']
-  var devList = {...fillData['devList']}
+  if (!isHaveFillData) {
+    var fillDataFilter = {...fillData}
+    delete fillDataFilter['devList']
+    var devList = {...fillData['devList']} // WARN: Shallow Clone
+  }
 
   console.log(fillData)
   console.log(matchFillName)
@@ -62,8 +64,6 @@ export default function About() {
       useFillStore.getState().setFillData(data)
     })
   }
-
-  // <DetectCurrentUrl />
 
   const detectProps = {
     isDetectFill: isDetectFill,
