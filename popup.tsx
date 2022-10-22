@@ -1,4 +1,5 @@
 import About from './components/about/index'
+import FastFilling from './components/fastFilling/index'
 import FastLogin from './components/fastLogin/index'
 import FastSetting from './components/fastSetting/index'
 import TabElement from './components/main/header'
@@ -15,8 +16,10 @@ function IndexPopup() {
     if (tab === 1) {
       return <FastLogin />
     } else if (tab === 2) {
+      return <FastFilling />
+    } else if (tab === 4) {
       return <FastSetting />
-    } else if (tab === 3) {
+    } else if (tab === 5) {
       return <About />
     }
   }

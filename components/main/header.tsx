@@ -5,13 +5,15 @@ function TabElement() {
     useTabStore.getState().setTab(num)
   }
 
+  let spaceTab = 100 / 4
+
   function classTab(num: number) {
     const tab = useTabStore((state) => state.tab)
 
     if (tab === num) {
-      return 'tab tab-active text-opacity-100 font-bold m-auto w-[33%]'
+      return `tab tab-active text-opacity-100 font-bold m-auto w-[${spaceTab}%]`
     } else {
-      return 'tab text-opacity-100 m-auto w-[33%]'
+      return `tab text-opacity-100 m-auto w-[${spaceTab}%]`
     }
   }
 
@@ -22,9 +24,12 @@ function TabElement() {
           🚀
         </a>
         <a className={classTab(2)} onClick={() => setTabEnv(2)}>
+          📜
+        </a>
+        <a className={classTab(4)} onClick={() => setTabEnv(4)}>
           🧰
         </a>
-        <a className={classTab(3)} onClick={() => setTabEnv(3)}>
+        <a className={classTab(5)} onClick={() => setTabEnv(5)}>
           📚
         </a>
       </div>

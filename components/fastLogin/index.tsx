@@ -1,12 +1,11 @@
 import {useEffect} from 'react'
 
-import useFillStore from '../../storage/loadFill'
 import useLoadingStore from '../../storage/loadStatus'
 import useLoginStore from '../../storage/loginData'
 import {fetchFillData, fetchLoginData, fetchLoginUrl} from '../../utils/fetcher'
+import Loading from '../main/loading'
 import AutoFill from './autofill'
 import ListLogin from './listLogin'
-import Loading from './loading'
 import SelectorEnv from './selectorEnv'
 import Title from './title'
 
@@ -14,7 +13,6 @@ export default function FastLogin() {
   const loginData = useLoginStore((state) => state.loginData)
   const loginUrl = useLoginStore((state) => state.loginUrl)
   const loadingState = useLoadingStore((state) => state.loadingStatus)
-  const fillData = useFillStore((state) => state.fillData)
   const isLoginInLS =
     (loginData || loginUrl) &&
     (Object.keys(loginData).length === 0 || Object.keys(loginUrl).length === 0)
@@ -41,13 +39,11 @@ export default function FastLogin() {
         useLoadingStore.getState().setLoadingStatus(false)
         useLoginStore.getState().setLoginData(data)
         useLoginStore.getState().setCurrentEnv(Object.keys(data)[0])
-        fetchFillData().then((data) => {
-          useFillStore.getState().setFillData(data)
-        })
       })
     })
   }
 
+  // <AutoFill fillData={fillData} />
   return (
     <>
       <Title />
@@ -57,7 +53,6 @@ export default function FastLogin() {
         }}
       />
       <ListLogin />
-      <AutoFill fillData={fillData} />
     </>
   )
 }
