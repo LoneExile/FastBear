@@ -22,6 +22,8 @@ export default function FastLogin() {
     return arr
   }
 
+  // TODO: Alert toilet
+
   const dropDownTheme = () => {
     return (
       <div className="">

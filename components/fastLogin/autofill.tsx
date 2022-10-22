@@ -1,6 +1,6 @@
 import {useEffect} from 'react'
 
-const AutoFill = () => {
+const AutoFill = ({fillData}) => {
   useEffect(() => {
     // TODO: check element/url before enable buttom autofill
     // TODO: ping check is vpn enable (ping?)
@@ -20,7 +20,8 @@ const AutoFill = () => {
       var fillMessage = {
         action: 'fillKeyFull',
         link: chrome.runtime.getURL(`assets/numberPic/`),
-        tabId: currentTabsID
+        tabId: currentTabsID,
+        fillData: fillData
       }
       chrome.tabs.sendMessage(currentTabsID, fillMessage, (response) => {
         console.log('Response from content: ', response)
