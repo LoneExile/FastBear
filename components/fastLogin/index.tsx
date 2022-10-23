@@ -4,7 +4,6 @@ import useLoadingStore from '../../storage/loadStatus'
 import useLoginStore from '../../storage/loginData'
 import {fetchFillData, fetchLoginData, fetchLoginUrl} from '../../utils/fetcher'
 import Loading from '../main/loading'
-import AutoFill from './autofill'
 import ListLogin from './listLogin'
 import SelectorEnv from './selectorEnv'
 import Title from './title'
@@ -43,7 +42,6 @@ export default function FastLogin() {
     })
   }
 
-  // <AutoFill fillData={fillData} />
   return (
     <>
       <Title />

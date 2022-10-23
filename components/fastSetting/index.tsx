@@ -40,7 +40,7 @@ export default function FastLogin() {
 
   return (
     <div className="h-[300px]">
-      <h2 className="text-3xl font-bold border-2 rounded-md text-center bg-secondary border-transparent">
+      <h2 className="text-3xl text-primary-content font-bold border-2 rounded-md text-center bg-secondary border-transparent">
         Setting
       </h2>
       <div className="flex flex-wrap justify-between h-[230px] mt-2">

@@ -59,7 +59,7 @@ const ListLogin = () => {
     return (
       // TODO: fixed height position this border to max-height
       <>
-        <div className="flex flex-wrap justify-between p-2 mb-2 mt-3 border-2 rounded-md border-slate-900">
+        <div className="flex flex-wrap justify-between p-2 mb-2 mt-3 border-2 rounded-md border-primary-content h-[62%]">
           {arr}
         </div>
       </>

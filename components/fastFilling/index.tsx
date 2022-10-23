@@ -8,6 +8,11 @@ import Loading from '../main/loading'
 import DetectCurrentUrl from './detectCurrentUrl'
 import Title from './title'
 
+// TODO: check element/url before enable buttom autofill
+// TODO: ping check is vpn enable (ping?)
+// TODO: check user E-mail before render
+// TODO: add notification when detect match url
+
 export default function FastFilling() {
   const loadingState = useLoadingStore((state) => state.loadingStatus)
 

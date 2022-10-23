@@ -3,6 +3,7 @@ import FastFilling from './components/fastFilling/index'
 import FastLogin from './components/fastLogin/index'
 import FastSetting from './components/fastSetting/index'
 import TabElement from './components/main/header'
+// import useFillStore from './storage/loadFill'
 import useTabStore from './storage/tab'
 import {useThemeStore} from './storage/theme'
 
@@ -30,7 +31,7 @@ function IndexPopup() {
         data-theme={theme}
         className="w-[300px] h-[399px] p-[10px] overflow-y-hidden overflow-x-hidden">
         <TabElement />
-        <div className="p-2 border-solid border-2 rounded-md border-slate-900 h-[330px]">
+        <div className="p-2 border-solid border-2 rounded-md border-primary-content h-[330px]">
           {renderTab()}
         </div>
       </div>
