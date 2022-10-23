@@ -21,7 +21,7 @@ export default function SelectorEnv({fetchLogin}) {
     useLoginStore.getState().setCurrentEnv(event.target.value)
   }
 
-  const dropDownEnv = () => {
+  const DropDownEnv = () => {
     // TODO: make selector box bigger, so can display more characters
     return (
       <div className="flex w-[100%] h-[20%] mt-[2%] item-center px-[2%]">
@@ -53,7 +53,7 @@ export default function SelectorEnv({fetchLogin}) {
     return (
       <>
         <div className="flex flex-wrap justify-between mt-2">
-          {dropDownEnv()}
+          <DropDownEnv />
         </div>
       </>
     )

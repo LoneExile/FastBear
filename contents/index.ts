@@ -5,12 +5,9 @@ chrome.runtime.onMessage.addListener((msg, sender, callback) => {
   if (msg['action'] === 'login') {
     clearLocal(msg)
     callback(msg['open'])
-  } else if (msg['action'] === 'fillKeyFull') {
-    fillData(msg['link'])
-    callback('fillKeyFull')
-  } else if (msg === 'checkElement') {
-    const element = document.querySelectorAll('input.none-input-file')
-    callback(element.length > 0 ? true : false)
+  } else if (msg['action'] === 'fullFill') {
+    fillData(msg)
+    callback('fullFill')
   } else {
     callback('error')
   }

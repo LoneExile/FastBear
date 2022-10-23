@@ -8,6 +8,8 @@ interface FillDataProps {
   setDetectFillData: (detectFillData: boolean) => void
   matchFillUrl: string
   setMatchFillUrl: (matchFillUrl: string) => void
+  currentSheetName: string
+  setCurrentSheetName: (currentSheetName: string) => void
 }
 const useFillStore = create(
   persist<FillDataProps>((set) => ({
@@ -17,7 +19,11 @@ const useFillStore = create(
     setDetectFillData: (detectFillData) =>
       set(() => ({detectFillData: detectFillData})),
     matchFillUrl: '',
-    setMatchFillUrl: (matchFillUrl) => set(() => ({matchFillUrl: matchFillUrl}))
+    setMatchFillUrl: (matchFillUrl) =>
+      set(() => ({matchFillUrl: matchFillUrl})),
+    currentSheetName: '',
+    setCurrentSheetName: (currentSheetName) =>
+      set(() => ({currentSheetName: currentSheetName}))
   }))
 )
 
