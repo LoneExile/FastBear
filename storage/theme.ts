@@ -8,7 +8,7 @@ interface ThemeProps {
 
 export const useThemeStore = create(
   persist<ThemeProps>((set) => ({
-    theme: 'luxury',
+    theme: 'retro',
     setTab: (theme) => set(() => ({theme: theme}))
   }))
 )

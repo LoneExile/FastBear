@@ -33,15 +33,15 @@ export default function FastFilling() {
   if (!isHaveFillData) {
     var fillDataFilter = {...fillData} // WARN: Shallow Clone
     delete fillDataFilter['devList']
-    var devList = {...fillData['devList']}
   }
 
   useEffect(() => {
     try {
       if (isHaveFillData) {
         fetchFillingData()
+      } else {
+        checkCurrentTab()
       }
-      checkCurrentTab()
     } catch (e) {
       useLoadingStore.getState().setLoadingStatus(false)
     }
@@ -50,12 +50,14 @@ export default function FastFilling() {
   useEffect(() => {
     // NOTE: IDK why, but it works
     const reg = /\[(\d+)\](.*)/
-    for (let i = 0; i < Object.values(fillDataFilter).length; i++) {
-      if (Object.keys(fillDataFilter)[i].match(reg)) {
-        const sheetNameId = Object.keys(fillDataFilter)[i].match(reg)[1]
-        if (sheetNameId === idlMatchFillName.toString()) {
-          setCurrentSheetName(Object.keys(fillDataFilter)[i])
-          break
+    if (!isHaveFillData) {
+      for (let i = 0; i < Object.values(fillDataFilter).length; i++) {
+        if (Object.keys(fillDataFilter)[i].match(reg)) {
+          const sheetNameId = Object.keys(fillDataFilter)[i].match(reg)[1]
+          if (sheetNameId === idlMatchFillName.toString()) {
+            setCurrentSheetName(Object.keys(fillDataFilter)[i])
+            break
+          }
         }
       }
     }
@@ -97,19 +99,21 @@ export default function FastFilling() {
 
   const sheetOptions = () => {
     var arr = []
-    var firstValueArr = []
-    const reg = /\[(\d+)\](.*)/
-    for (let i = 0; i < Object.values(fillDataFilter).length; i++) {
-      if (Object.keys(fillDataFilter)[i].match(reg)) {
-        const sheetName = Object.keys(fillDataFilter)[i].match(reg)[2]
-        const sheetNameId = Object.keys(fillDataFilter)[i].match(reg)[1]
-        if (sheetNameId === idlMatchFillName.toString()) {
-          firstValueArr.push(Object.keys(fillDataFilter)[i])
-          arr.push(
-            <option key={i} value={Object.keys(fillDataFilter)[i]}>
-              {sheetName}
-            </option>
-          )
+    if (!isHaveFillData) {
+      var firstValueArr = []
+      const reg = /\[(\d+)\](.*)/
+      for (let i = 0; i < Object.values(fillDataFilter).length; i++) {
+        if (Object.keys(fillDataFilter)[i].match(reg)) {
+          const sheetName = Object.keys(fillDataFilter)[i].match(reg)[2]
+          const sheetNameId = Object.keys(fillDataFilter)[i].match(reg)[1]
+          if (sheetNameId === idlMatchFillName.toString()) {
+            firstValueArr.push(Object.keys(fillDataFilter)[i])
+            arr.push(
+              <option key={i} value={Object.keys(fillDataFilter)[i]}>
+                {sheetName}
+              </option>
+            )
+          }
         }
       }
     }

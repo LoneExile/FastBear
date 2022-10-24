@@ -2,7 +2,7 @@ import {useEffect} from 'react'
 
 import useLoadingStore from '../../storage/loadStatus'
 import useLoginStore from '../../storage/loginData'
-import {fetchFillData, fetchLoginData, fetchLoginUrl} from '../../utils/fetcher'
+import {fetchLoginData, fetchLoginUrl} from '../../utils/fetcher'
 import Loading from '../main/loading'
 import ListLogin from './listLogin'
 import SelectorEnv from './selectorEnv'

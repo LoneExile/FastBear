@@ -3,7 +3,7 @@ import FastFilling from './components/fastFilling/index'
 import FastLogin from './components/fastLogin/index'
 import FastSetting from './components/fastSetting/index'
 import TabElement from './components/main/header'
-// import useFillStore from './storage/loadFill'
+import Toilet from './components/utility/toilet'
 import useTabStore from './storage/tab'
 import {useThemeStore} from './storage/theme'
 
@@ -18,6 +18,8 @@ function IndexPopup() {
       return <FastLogin />
     } else if (tab === 2) {
       return <FastFilling />
+    } else if (tab === 3) {
+      return <Toilet />
     } else if (tab === 4) {
       return <FastSetting />
     } else if (tab === 5) {

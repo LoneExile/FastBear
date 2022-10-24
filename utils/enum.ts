@@ -31,11 +31,12 @@ enum AllTheme {
 }
 enum ScriptUrl {
   BaseUrl = 'https://script.google.com/a/macros/turbo.co.th/s/',
-  ApiKey = 'AKfycbwP6ui2AmOdFUdOy2k_JXPu357-Q4SdvTyyLqyFojeXFMhGYmT6G4YKg5vX-f3s3o5upg/exec',
+  ApiKey = 'AKfycbzDOaiLRoB0c9rP4B6D7QA7XP0ZAvo4BMJxXhuz8s-w6O0yuJUIG05jhdirPMaH7P21qQ/exec',
   IdSheetLogin = '&sheetId=',
   GetLoginUrl = '?action=url',
   GetLoginData = '?action=login',
-  GetFillData = '?action=fillData'
+  GetFillData = '?action=fillData',
+  GetUtilsUrl = '?action=utility'
 }
 
 enum SheetUrl {

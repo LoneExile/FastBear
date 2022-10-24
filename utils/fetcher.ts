@@ -18,4 +18,10 @@ async function fetchFillData() {
   return res.clone().json()
 }
 
-export {fetchLoginUrl, fetchLoginData, fetchFillData}
+async function fetchUtilsUrl() {
+  const url = S.BaseUrl + S.ApiKey + S.GetUtilsUrl + S.IdSheetLogin
+  const res = await fetch(url, {})
+  return res.clone().json()
+}
+
+export {fetchLoginUrl, fetchLoginData, fetchFillData, fetchUtilsUrl}

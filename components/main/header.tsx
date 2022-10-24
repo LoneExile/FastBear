@@ -17,21 +17,30 @@ function TabElement() {
     }
   }
 
+  const renderTab = (icon: string, id: number, isEable: boolean) => {
+    if (isEable) {
+      return (
+        <a className={classTab(id)} onClick={() => setTabEnv(id)}>
+          {icon}
+        </a>
+      )
+    } else {
+      return <></>
+    }
+  }
+
   return (
     <>
       <div className="flex w-full grid-flow-row grid-cols-12 items-center gap-0 overflow-y-hidden overflow-x-hidden px-[4px] tabs tabs-boxed mb-2 bg-base-200">
-        <a className={classTab(1)} onClick={() => setTabEnv(1)}>
-          🚀
-        </a>
-        <a className={classTab(2)} onClick={() => setTabEnv(2)}>
-          📜
-        </a>
-        <a className={classTab(4)} onClick={() => setTabEnv(4)}>
-          🧰
-        </a>
-        <a className={classTab(5)} onClick={() => setTabEnv(5)}>
-          📚
-        </a>
+        {renderTab('🚀', 1, true)}
+        {renderTab('📜', 2, true)}
+        {renderTab(
+          '🚻',
+          3,
+          useTabStore((state) => state.isToilet)
+        )}
+        {renderTab('🧰', 4, true)}
+        {renderTab('📚', 5, true)}
       </div>
     </>
   )
