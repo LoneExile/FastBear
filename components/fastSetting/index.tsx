@@ -6,13 +6,17 @@ let allTheme = Object.values(AllTheme).filter(
   (item) => typeof item !== 'number'
 )
 
+// BUG: after set Theme, tab will be reset?
+// need to set theme then close popup to set theme correctly
+// solution1. Add button to save selected theme ( close when press )
+// solution2. Add note to tell user to close popup to save theme
+const setTheme = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  useThemeStore.getState().setTab(event.target.value)
+  // useThemeStore.setState({theme: event.target.value})
+}
+
 export default function FastLogin() {
   const isToilet = useTabStore((state) => state.isToilet)
-
-  // BUG: after set Theme, tab will be reset?
-  const setTheme = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    useThemeStore.getState().setTab(event.target.value)
-  }
 
   const buildOptions = () => {
     var arr = []
@@ -41,6 +45,8 @@ export default function FastLogin() {
   }
 
   // FIX: This, I don't like it
+  // BUG: cuase alot of rerender? see in extension error
+  // use chrome storage to store theme instead?
   const setToiletTab = () => {
     useTabStore.getState().setIsToilet(!isToilet)
     window.close()
