@@ -1,17 +1,25 @@
-import {faPerson, faPersonDress} from '@fortawesome/free-solid-svg-icons'
+import {
+  faPerson,
+  faPersonDress,
+  faRotateRight
+} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {useEffect} from 'react'
+import {useQuery} from '@tanstack/react-query'
+import {useEffect, useState} from 'react'
 import React from 'react'
 import shallow from 'zustand/shallow'
 
 import {Storage} from '@plasmohq/storage'
 
+import useTabStore from '../../storage/tab'
 import useUtilityStore from '../../storage/utility'
 import {fetchUtilsUrl} from '../../utils/fetcher'
+import Loading from '../main/loading'
 import Title from './title'
 
 const Toilet = () => {
   const storage = new Storage()
+
   const {utilityData, toiletData, toiletRoomSelected, toiletAllRooms} =
     useUtilityStore(
       (state) => ({
@@ -24,40 +32,21 @@ const Toilet = () => {
     )
 
   const fetchUtility = async () => {
-    fetchUtilsUrl().then((data) => {
-      useUtilityStore.getState().setUtilityData(data)
-    })
+    const data = await fetchUtilsUrl()
+    useUtilityStore.getState().setUtilityData(data)
+
     await storage.set('selectedRoom', JSON.stringify(toiletRoomSelected))
     for (let i = 0; i < Object.keys(toiletRoomSelected).length; i++) {
       const key = 'enableNotify-ft' + Object.values(toiletRoomSelected)[i]
       await storage.set(key, 'true')
-      console.log(key, await storage.get(key))
+      // console.log(key, await storage.get(key))
     }
+
+    return data
   }
-
-  useEffect(() => {
-    try {
-      const isUtilityInLS = Object.keys(utilityData).length === 0
-      const isToiletInLS = Object.keys(toiletData).length === 0
-
-      if (isUtilityInLS) {
-        fetchUtility()
-      }
-      if (isToiletInLS && !isUtilityInLS) {
-        fetchToilet()
-      }
-      // if (!isToiletInLS && !isUtilityInLS) {
-      // FIX: This, error first time load
-      setInterval(() => fetchToilet(), 3000)
-      // }
-    } catch (e) {
-      console.log(e)
-    }
-  }, [])
 
   const fetchToilet = async () => {
     // TODO: add loading when fetcing data
-
     var allData = []
     for (let i = 0; i < Object.keys(toiletRoomSelected).length; i++) {
       let room = Object.keys(toiletRoomSelected)[i]
@@ -66,155 +55,200 @@ const Toilet = () => {
       let data = await response.clone().json()
       allData = [...allData, data]
     }
-    console.log('dataAll', allData)
     useUtilityStore.getState().setToiletData(allData)
+    return allData
   }
 
-  const ToiletStatus = () => {
-    let ArrComponet = []
-    for (let i = 0; i < Object.keys(toiletData).length / 2; i++) {
-      let arr = []
-      arr.push(toiletData[i * 2])
-      arr.push(toiletData[i * 2 + 1])
-      const statusMen = Object.values(arr).filter(
-        (item) => item['gender']['name'] === 'Male'
-      )
-      const statusWomen = Object.values(arr).filter(
-        (item) => item['gender']['name'] === 'Female'
-      )
-      let classstatus = (status: boolean) => {
-        if (!status) {
-          return 'text-[48px] text-success'
-        } else {
-          return 'text-[48px] text-error'
-        }
+  const isUtilityInLS = (utilityData[0]?.url).length > 0
+  const {} = useQuery(['utilsUrl'], fetchUtility, {
+    enabled: !isUtilityInLS
+  })
+  // const {isLoading} = useQuery(['toiletData'], fetchToilet, {
+  //   enabled: isUtilityInLS
+  // })
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    setIsLoading(true)
+    // NOTE: it do one time
+    try {
+      if (isUtilityInLS) {
+        // setInterval(fetchToilet, 1000)
+        fetchToilet().then(() => {
+          setIsLoading(false)
+          useTabStore.getState().setTab(3)
+        })
       }
+    } catch (e) {
+      console.log(e)
+      setIsLoading(false)
+    }
+  }, [isUtilityInLS])
 
-      // TODO: make it smooth, change when status change
-      // const convertMilisecToTime = (milisec: number) => {
-      //   const duration = milisec
-      //   const hours = Math.floor(duration / 3600000)
-      //   const minutes = Math.floor((duration % 3600000) / 60000)
-      //   const seconds = Math.floor(((duration % 3600000) % 60000) / 1000)
-      //   const durationString = `${hours}:${minutes}:${seconds}`
-      //   return durationString.toString()
-      // }
+  if (isLoading) {
+    return <Loading Title={Title} />
+  } else {
+    const ToiletStatus = () => {
+      let ArrComponet = []
+      for (let i = 0; i < Object.keys(toiletData).length; i++) {
+        let arr = []
+        arr = [...arr, toiletData[i]]
+        const statusMen = Object.values(arr[0]).filter(
+          (item) => item['gender']['name'] === 'Male'
+        )
+        const statusWomen = Object.values(arr[0]).filter(
+          (item) => item['gender']['name'] === 'Female'
+        )
 
-      const statusComponent = (
-        <div
-          className="border-2 m-2 border-neutral text-center rounded-md w-[40%]"
-          key={i}>
-          <div className="text-current mb-[5%]">
-            <span>ft.{statusMen[0].floor}</span>
-          </div>
-          <FontAwesomeIcon
-            icon={faPerson}
-            className={classstatus(statusMen[0].isAvailable)}
-          />
-          <FontAwesomeIcon
-            icon={faPersonDress}
-            className={classstatus(statusWomen[0].isAvailable)}
-          />
-          <div className="mt-[5%] text-current">
-            {/*
+        let classstatus = (status: boolean) => {
+          if (!status) {
+            return 'text-[48px] text-success'
+          } else {
+            return 'text-[48px] text-error'
+          }
+        }
+
+        // TODO: make it smooth, change when status change
+        const convertMilisecToTime = (milisec: number) => {
+          const duration = milisec
+          const hours = Math.floor(duration / 3600000)
+          const minutes = Math.floor((duration % 3600000) / 60000)
+          const seconds = Math.floor(((duration % 3600000) % 60000) / 1000)
+          const durationString = `${hours}:${minutes}:${seconds}`
+          return durationString.toString()
+        }
+
+        const statusComponent = (
+          <div
+            className="border-2 mx-2 mt-2 border-neutral text-center rounded-md w-[40%]"
+            key={i}>
+            <div className="text-current mb-[5%]">
+              <span>ft.{statusMen[0]['floor']}</span>
+            </div>
+            <FontAwesomeIcon
+              icon={faPerson}
+              className={classstatus(statusMen[0]['isAvailable'])}
+            />
+            <FontAwesomeIcon
+              icon={faPersonDress}
+              className={classstatus(statusWomen[0]['isAvailable'])}
+            />
+            <div className="mt-[5%] text-current">
               <span>
-                {!statusMen[0].isAvailable
+                {!statusMen[0]['isAvailable']
                   ? convertMilisecToTime(0)
-                  : convertMilisecToTime(statusMen[0].duration)}
+                  : convertMilisecToTime(statusMen[0]['duration'])}
               </span>
               <span>{' | '}</span>
               <span>
-                {!statusWomen[0].isAvailable
+                {!statusWomen[0]['isAvailable']
                   ? convertMilisecToTime(0)
-                  : convertMilisecToTime(statusWomen[0].duration)}
+                  : convertMilisecToTime(statusWomen[0]['duration'])}
               </span>
-              */}
+            </div>
+          </div>
+        )
+        ArrComponet.push(statusComponent)
+      }
+
+      return (
+        <>
+          <div className="flex flex-wrap">{ArrComponet}</div>
+        </>
+      )
+    }
+
+    const roomOption = () => {
+      let arr = []
+      for (let i = 0; i < Object.keys(toiletAllRooms).length; i++) {
+        arr.push(
+          <option value={Object.values(toiletAllRooms)[i]} key={i}>
+            {Object.values(toiletAllRooms)[i]}
+          </option>
+        )
+      }
+      return arr
+    }
+
+    const getCurrentSelected = () => {
+      const current = document.getElementById(
+        'selectedRoom'
+      ) as HTMLSelectElement
+
+      if (Object.keys(toiletRoomSelected).includes(current.value.toString())) {
+        const toiletRoom = JSON.parse(JSON.stringify(toiletRoomSelected))
+        delete toiletRoom[current.value]
+        useUtilityStore.getState().setToiletSelected(toiletRoom)
+      } else {
+        const toiletRoom = JSON.parse(JSON.stringify(toiletRoomSelected))
+        toiletRoom[current.value] = true
+        useUtilityStore.getState().setToiletSelected(toiletRoom)
+      }
+      // WARN: Hmmmmmmm
+      location.reload()
+    }
+
+    const AddRoom = () => {
+      return (
+        <div className="flex justify-around">
+          <div className="form-control tooltip" data-tip="Notify Me">
+            <label className="label cursor-pointer">
+              <input
+                type="checkbox"
+                // checked={true}
+                className="checkbox checkbox-primary mr-2 mt-[12.5%]"
+              />
+            </label>
+          </div>
+
+          <div className="flex mt-2 px-1">
+            {/* // border-2 border-transparent border-r-primary border-l-primary */}
+            <div className="input-group">
+              <select
+                id="selectedRoom"
+                className="select select-bordered select-sm text-xs ">
+                {roomOption()}
+              </select>
+              <button
+                className="btn btn-sm tooltip"
+                data-tip="Add/Remove"
+                onClick={() => getCurrentSelected()}>
+                🌟
+              </button>
+            </div>
+          </div>
+          <div className="flex">
+            <div className="form-control tooltip " data-tip="AutoFetch">
+              <label className="label cursor-pointer pb-0 pt-[40%] flex items-center">
+                <input
+                  type="checkbox"
+                  // checked={true}
+                  className="checkbox checkbox-primary"
+                />
+              </label>
+            </div>
+            <button
+              className="tooltip btn btn-outline border-2 btn-sm font-bold mt-2"
+              data-tip="Update"
+              onClick={() => fetchToilet()}>
+              {/* TODO: add loading */}
+              <FontAwesomeIcon icon={faRotateRight} />
+            </button>
           </div>
         </div>
       )
-      ArrComponet.push(statusComponent)
     }
 
+    // <progress className="progress w-[100%]"></progress>
     return (
       <>
-        <div className="flex flex-wrap">{ArrComponet}</div>
+        <Title />
+        <AddRoom />
+        <ToiletStatus />
       </>
     )
   }
-
-  const checkNotify = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-    ft: number
-  ) => {
-    const status = e.target.checked
-    if (ft === 2) {
-      console.log('status', status)
-      await storage.set('enableNotify-ft2', status.toString())
-    }
-    if (ft === 3) {
-      console.log('status', status)
-      await storage.set('enableNotify-ft3', status.toString())
-    }
-  }
-
-  // if (loadingState) {
-  //   return <Loading Title={Title} />
-  // }
-
-  const AddRoom = () => {
-    return (
-      <div className="flex justify-center">
-        <div className=" form-control mt-2">
-          <div className="input-group">
-            <select className="select select-bordered select-sm text-xs ">
-              <option>1</option>
-              <option>2</option>
-            </select>
-            <button className="btn btn-sm">Add</button>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  const checkBoxSetting = () => {
-    return (
-      <div>
-        <div className="form-control mt-[5%] flex">
-          <label
-            className="label cursor-pointer font-bold text-neutral tooltip"
-            data-tip="Notify me">
-            <div className="badge badge-xs mr-[4%]">Floor 2</div>
-            <input
-              type="checkbox"
-              checked={true}
-              onChange={(e) => {
-                checkNotify(e, 2)
-              }}
-              className="checkbox checkbox-xs checkbox-primary"
-            />
-            {' || '}
-            <div className="badge badge-xs mr-[4%]">Floor 3</div>
-            <input
-              type="checkbox"
-              checked={true}
-              onChange={(e) => {
-                checkNotify(e, 3)
-              }}
-              className="checkbox checkbox-xs checkbox-primary"
-            />
-          </label>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <>
-      <Title />
-      <AddRoom />
-    </>
-  )
 }
 
 export default Toilet

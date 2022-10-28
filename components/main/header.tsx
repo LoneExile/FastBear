@@ -5,7 +5,7 @@ function TabElement() {
     useTabStore.getState().setTab(num)
   }
 
-  let spaceTab = 100 / 4
+  let spaceTab = 100 / 5
 
   function classTab(num: number) {
     const tab = useTabStore((state) => state.tab)
@@ -37,7 +37,8 @@ function TabElement() {
         {renderTab(
           '🚻',
           3,
-          useTabStore((state) => state.isToilet)
+          // useTabStore((state) => state.isToilet)
+          true
         )}
         {renderTab('🧰', 4, true)}
         {renderTab('📚', 5, true)}

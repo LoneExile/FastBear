@@ -1,3 +1,5 @@
+import {useEffect, useState} from 'react'
+
 import useTabStore from '../../storage/tab'
 import {useThemeStore} from '../../storage/theme'
 import {AllTheme} from '../../utils/enum'
@@ -6,17 +8,16 @@ let allTheme = Object.values(AllTheme).filter(
   (item) => typeof item !== 'number'
 )
 
-// BUG: after set Theme, tab will be reset?
-// need to set theme then close popup to set theme correctly
-// solution1. Add button to save selected theme ( close when press )
-// solution2. Add note to tell user to close popup to save theme
-const setTheme = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  useThemeStore.getState().setTab(event.target.value)
-  // useThemeStore.setState({theme: event.target.value})
-}
-
 export default function FastLogin() {
-  const isToilet = useTabStore((state) => state.isToilet)
+  // const isToilet = useTabStore((state) => state.isToilet)
+
+  const setTheme = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    // useTabStore.getState().setTab(4)
+    useThemeStore.getState().setTab(event.target.value)
+
+    // WARN: Hmmmmmmm
+    location.reload()
+  }
 
   const buildOptions = () => {
     var arr = []
@@ -36,7 +37,10 @@ export default function FastLogin() {
         <div className="badge badge-accent m-auto ml-1">Theme</div>
         <select
           className="select select-info m-1 ml-[45px]"
-          onChange={setTheme}
+          onChange={(e) => {
+            e.preventDefault()
+            setTheme(e)
+          }}
           value={useThemeStore((state) => state.theme)}>
           {buildOptions()}
         </select>
@@ -47,10 +51,10 @@ export default function FastLogin() {
   // FIX: This, I don't like it
   // BUG: cuase alot of rerender? see in extension error
   // use chrome storage to store theme instead?
-  const setToiletTab = () => {
-    useTabStore.getState().setIsToilet(!isToilet)
-    window.close()
-  }
+  // const setToiletTab = () => {
+  //   useTabStore.getState().setIsToilet(!isToilet)
+  //   window.close()
+  // }
 
   return (
     <>
@@ -61,6 +65,7 @@ export default function FastLogin() {
         <div className="flex flex-wrap justify-between mt-2">
           <DropDownTheme />
         </div>
+        {/*
         <div className="form-control">
           <label className="label flex justify-between">
             <div className="badge badge-secondary">Toilet API</div>
@@ -72,6 +77,7 @@ export default function FastLogin() {
             />
           </label>
         </div>
+        */}
       </div>
     </>
   )

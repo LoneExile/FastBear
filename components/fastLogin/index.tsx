@@ -2,6 +2,7 @@ import {useEffect} from 'react'
 
 import useLoadingStore from '../../storage/loadStatus'
 import useLoginStore from '../../storage/loginData'
+import useTabStore from '../../storage/tab'
 import {fetchLoginData, fetchLoginUrl} from '../../utils/fetcher'
 import Loading from '../main/loading'
 import ListLogin from './listLogin'
@@ -35,6 +36,7 @@ export default function FastLogin() {
     fetchLoginUrl().then((data) => {
       useLoginStore.getState().setLoginUrl(data)
       fetchLoginData().then((data) => {
+        useTabStore.getState().setTab(1)
         useLoadingStore.getState().setLoadingStatus(false)
         useLoginStore.getState().setLoginData(data)
         useLoginStore.getState().setCurrentEnv(Object.keys(data)[0])

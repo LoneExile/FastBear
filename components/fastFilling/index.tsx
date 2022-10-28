@@ -3,6 +3,7 @@ import shallow from 'zustand/shallow'
 
 import useFillStore from '../../storage/loadFill'
 import useLoadingStore from '../../storage/loadStatus'
+import useTabStore from '../../storage/tab'
 import {fetchFillData} from '../../utils/fetcher'
 import Loading from '../main/loading'
 import DetectCurrentUrl from './detectCurrentUrl'
@@ -88,6 +89,7 @@ export default function FastFilling() {
   const fetchFillingData = () => {
     useLoadingStore.getState().setLoadingStatus(true)
     fetchFillData().then((data) => {
+      useTabStore.getState().setTab(2)
       useLoadingStore.getState().setLoadingStatus(false)
       useFillStore.getState().setFillData(data)
     })
