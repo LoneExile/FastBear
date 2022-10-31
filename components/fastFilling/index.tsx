@@ -92,6 +92,8 @@ export default function FastFilling() {
       useTabStore.getState().setTab(2)
       useLoadingStore.getState().setLoadingStatus(false)
       useFillStore.getState().setFillData(data)
+      // WARN:
+      location.reload()
     })
   }
 

@@ -40,6 +40,8 @@ export default function FastLogin() {
         useLoadingStore.getState().setLoadingStatus(false)
         useLoginStore.getState().setLoginData(data)
         useLoginStore.getState().setCurrentEnv(Object.keys(data)[0])
+        // WARN:
+        location.reload()
       })
     })
   }
