@@ -25,14 +25,16 @@ const Toilet = () => {
     toiletData,
     toiletRoomSelected,
     toiletAllRooms,
-    isAutoFetch
+    isAutoFetch,
+    isNotifyOn
   } = useUtilityStore(
     (state) => ({
       utilityData: state.utilityData,
       toiletData: state.toiletData,
       toiletRoomSelected: state.toiletRoomSelected,
       toiletAllRooms: state.toiletAllRooms,
-      isAutoFetch: state.isAutoFetch
+      isAutoFetch: state.isAutoFetch,
+      isNotifyOn: state.isNotifyOn
     }),
     shallow
   )
@@ -42,12 +44,8 @@ const Toilet = () => {
     useUtilityStore.getState().setUtilityData(data)
 
     await storage.set('selectedRoom', JSON.stringify(toiletRoomSelected))
-    for (let i = 0; i < Object.keys(toiletRoomSelected).length; i++) {
-      const key = 'enableNotify-ft' + Object.values(toiletRoomSelected)[i]
-      await storage.set(key, 'true')
-      // console.log(key, await storage.get(key))
-    }
-
+    await storage.set('utilityUrl', JSON.stringify(data))
+    await storage.set('isNotifyOn', JSON.stringify(isNotifyOn))
     return data
   }
 
@@ -199,6 +197,14 @@ const Toilet = () => {
       location.reload()
     }
 
+    // isNotifyOn
+
+    const setNotifyStatus = async (notifyOn) => {
+      useUtilityStore.getState().setIsNotifyOn(!notifyOn)
+      await storage.set('isNotifyOn', JSON.stringify(!notifyOn))
+      console.log(notifyOn)
+    }
+
     const AddRoom = () => {
       const toggleAutoFetch = () => {
         useUtilityStore.getState().setIsAutoFetch(!isAutoFetch)
@@ -212,7 +218,8 @@ const Toilet = () => {
             <label className="label cursor-pointer">
               <input
                 type="checkbox"
-                // checked={true}
+                onChange={() => setNotifyStatus(isNotifyOn)}
+                checked={isNotifyOn}
                 className="checkbox checkbox-primary mr-2 mt-[12.5%]"
               />
             </label>
