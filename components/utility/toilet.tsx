@@ -20,16 +20,22 @@ import Title from './title'
 const Toilet = () => {
   const storage = new Storage()
 
-  const {utilityData, toiletData, toiletRoomSelected, toiletAllRooms} =
-    useUtilityStore(
-      (state) => ({
-        utilityData: state.utilityData,
-        toiletData: state.toiletData,
-        toiletRoomSelected: state.toiletRoomSelected,
-        toiletAllRooms: state.toiletAllRooms
-      }),
-      shallow
-    )
+  const {
+    utilityData,
+    toiletData,
+    toiletRoomSelected,
+    toiletAllRooms,
+    isAutoFetch
+  } = useUtilityStore(
+    (state) => ({
+      utilityData: state.utilityData,
+      toiletData: state.toiletData,
+      toiletRoomSelected: state.toiletRoomSelected,
+      toiletAllRooms: state.toiletAllRooms,
+      isAutoFetch: state.isAutoFetch
+    }),
+    shallow
+  )
 
   const fetchUtility = async () => {
     const data = await fetchUtilsUrl()
@@ -74,17 +80,21 @@ const Toilet = () => {
     // NOTE: it do one time
     try {
       if (isUtilityInLS) {
-        // setInterval(fetchToilet, 1000)
         fetchToilet().then(() => {
           setIsLoading(false)
           useTabStore.getState().setTab(3)
         })
+        if (isAutoFetch) {
+          setInterval(() => {
+            fetchToilet()
+          }, 1500)
+        }
       }
     } catch (e) {
       console.log(e)
       setIsLoading(false)
     }
-  }, [isUtilityInLS])
+  }, [isUtilityInLS, isAutoFetch])
 
   if (isLoading) {
     return <Loading Title={Title} />
@@ -190,6 +200,12 @@ const Toilet = () => {
     }
 
     const AddRoom = () => {
+      const toggleAutoFetch = () => {
+        useUtilityStore.getState().setIsAutoFetch(!isAutoFetch)
+        // WARN: Hmmmmmmm
+        location.reload()
+      }
+
       return (
         <div className="flex justify-around">
           <div className="form-control tooltip" data-tip="Notify Me">
@@ -223,7 +239,8 @@ const Toilet = () => {
               <label className="label cursor-pointer pb-0 pt-[40%] flex items-center">
                 <input
                   type="checkbox"
-                  // checked={true}
+                  onChange={() => toggleAutoFetch()}
+                  checked={isAutoFetch}
                   className="checkbox checkbox-primary"
                 />
               </label>
@@ -231,6 +248,7 @@ const Toilet = () => {
             <button
               className="tooltip btn btn-outline border-2 btn-sm font-bold mt-2"
               data-tip="Update"
+              disabled={isAutoFetch}
               onClick={() => fetchToilet()}>
               {/* TODO: add loading */}
               <FontAwesomeIcon icon={faRotateRight} />
@@ -240,12 +258,18 @@ const Toilet = () => {
       )
     }
 
-    // <progress className="progress w-[100%]"></progress>
+    const LoadingAutoFetch = () => {
+      if (isAutoFetch) {
+        return <progress className="progress w-[100%]"></progress>
+      }
+    }
+
     return (
       <>
         <Title />
         <AddRoom />
         <ToiletStatus />
+        <LoadingAutoFetch />
       </>
     )
   }

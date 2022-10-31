@@ -10,6 +10,8 @@ interface UtilityProps {
   setToiletSelected: (toiletSelected: object) => void
   toiletAllRooms: object
   setToiletAllRooms: (toiletAllRooms: object) => void
+  isAutoFetch: boolean
+  setIsAutoFetch: (isAutoFetch: boolean) => void
 }
 const useUtilityStore = create(
   persist<UtilityProps>((set) => ({
@@ -22,7 +24,9 @@ const useUtilityStore = create(
       set(() => ({toiletRoomSelected: toiletSelected})),
     toiletAllRooms: [1, 2, 3],
     setToiletAllRooms: (toiletAllRooms) =>
-      set(() => ({toiletAllRooms: toiletAllRooms}))
+      set(() => ({toiletAllRooms: toiletAllRooms})),
+    isAutoFetch: false,
+    setIsAutoFetch: (isAutoFetch) => set(() => ({isAutoFetch: isAutoFetch}))
   }))
 )
 
