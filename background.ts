@@ -66,7 +66,7 @@ const setNotify = async (ft: number) => {
 
   setTimeout(() => {
     chrome.notifications.clear('toilet', () => {})
-  }, 5000)
+  }, 8000)
 }
 
 // chrome.alarms.onAlarm.addListener((alarm) => {
