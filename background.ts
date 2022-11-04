@@ -1,4 +1,4 @@
-import icon from 'data-base64:~assets/icon.png'
+import icon from 'data-base64:~assets/toilet.png'
 
 import {Storage} from '@plasmohq/storage'
 
@@ -59,7 +59,7 @@ const setNotify = async (ft: number) => {
   chrome.notifications.create('toilet', {
     type: 'basic',
     iconUrl: icon,
-    title: 'FastToilet: Floor' + ft,
+    title: 'Toilet: Floor' + ft,
     message: "Free now!, Let's go to toilet'",
     priority: 2
   })
