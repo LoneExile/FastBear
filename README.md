@@ -1,33 +1,38 @@
-**Currently re-make whole extension**
+# FastBear
 
-## Getting Started
+Chrome base browser extension.
 
-First, run the development server:
+Using stack React, TypeScript, Tailwind, Google API and [Plasmo framework](https://docs.plasmo.com/)
+
+I just don't like to do the same thing repeatedly So I make this tool.
+
+## Features
+
+-   fast login using data from google sheet easy to edit when user/pass change
+
+## Download
+[Chrome Web Store](https://chrome.google.com/webstore/detail/fastbear/lmacicjlhgbjnlombdiinpeabajfmdmg) <-- 1.0
+
+[Releases](https://github.com/LoneExile/FastBear/releases/tag/v2.0.0ahpha) <-- 2.0 
+
+## Notice
+
+only work with my company email login to that browser
+
+## to do
+
+-   [x] fast login
+-   [ ] auto fill
+    -   [ ] setup sheet for data to fill
+    -   [ ] keyin data
+    -   [ ] keyfull data
+-   [ ] setting menu fetch from google sheet
+
+## developer/contributors
+
+-   node 16+
 
 ```bash
+pnpm i
 pnpm dev
-# or
-npm run dev
 ```
-
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
-
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
-
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
-
-## Making production build
-
-Run the following:
-
-```bash
-pnpm build
-# or
-npm run build
-```
-
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
-
-## Submit to the webstores
-
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/workflows/submit) and you should be on your way for automated submission!
